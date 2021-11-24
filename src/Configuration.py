@@ -75,8 +75,8 @@ class Configuration:
         gl.glMatrixMode(gl.GL_MODELVIEW)
         gl.glLoadIdentity()
         gl.glTranslatef(0.0,0.0, self.parameters['screenPosition'])
-        gl.glRotatef(90,1,0,0)
-        
+        gl.glRotatef(-90,1,0,0)
+
     # Getter
     def getParameter(self, parameterKey):
         return self.parameters[parameterKey]    
@@ -149,18 +149,18 @@ class Configuration:
             pygame.time.wait(300)
 
         if self.event.key==pygame.K_PAGEUP:
-            gl.glScalef(1 / 1.1, 1 / 1.1, 1 / 1.1)
-        if self.event.key==pygame.K_PAGEDOWN:
             gl.glScalef(1.1,1.1,1.1)
+        if self.event.key==pygame.K_PAGEDOWN:
+            gl.glScalef(1/1.1,1/1.1,1/1.1)
 
-    
+
     # Processes the MOUSEBUTTONDOWN event
     def processMouseButtonDownEvent(self):
         if self.event.button==4:
-
-            gl.glScalef(1/1.1,1/1.1,1/1.1)
-        elif self.event.button==5:
             gl.glScalef(1.1,1.1,1.1)
+
+        elif self.event.button==5:
+            gl.glScalef(1 / 1.1, 1 / 1.1, 1 / 1.1)
 
 
     
