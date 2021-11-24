@@ -87,16 +87,12 @@ class Section:
         
     # Draws the edges
     def drawEdges(self):
-        # A compléter en remplaçant pass par votre code
-        
         lines = []
         for x in self.faces : 
             
             for i in range(len(x)):
                 lines.append([x[i], x[i+1 if i+1 < len(x) else 0]])
                 
-        
-
         for l in lines : 
             gl.glBegin(gl.GL_LINES) # Tracé d'une ligne
             gl.glColor3fv([0,0,0]) # Couleur gris moyen
@@ -104,18 +100,6 @@ class Section:
                 gl.glVertex3fv(self.vertices[sommet])
             gl.glEnd()
                 
-        """
-        gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_LINE) # on trace les faces : GL_FILL
-        for f in self.faces:
-            gl.glBegin(gl.GL_LINES) # Tracé d’un quadrilatère
-            gl.glColor3fv([self.parameters['color']) # Couleur gris moyen
-            i=0
-            for sommet in f : 
-                gl.glVertex3fv(self.vertices[sommet])
-                i=i+1
-                
-            gl.glEnd()   
-        """
                     
     # Draws the faces
     def draw(self):
