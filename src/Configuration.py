@@ -146,6 +146,12 @@ class Configuration:
         elif self.event.dict['unicode'] == 'a' or self.event.key == pygame.K_a:
             self.parameters['axes'] = not self.parameters['axes']
             pygame.time.wait(300)
+
+        if self.event.key==pygame.K_PAGEUP:
+            gl.glScalef(1 / 1.1, 1 / 1.1, 1 / 1.1)
+        if self.event.key==pygame.K_PAGEDOWN:
+            gl.glScalef(1.1,1.1,1.1)
+
     
     # Processes the MOUSEBUTTONDOWN event
     def processMouseButtonDownEvent(self):
