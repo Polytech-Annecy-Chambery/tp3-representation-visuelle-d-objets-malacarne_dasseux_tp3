@@ -43,9 +43,8 @@ def Q2c():
 
 def Q3a():
     return Configuration().add(
-            Wall({'position': [1, 1, 0], 'width':7, 'height':2.6, 'edges': True, 'orientation':90}).\
-            add(Section({'position':[1, 5, 0], 'width':5, 'height':1, 'edges': True, 'color':[1,0,0]}))
-            )
+            Wall({'position': [1, 1, 0], 'width':7, 'height':2.6, 'edges': True, 'orientation':90}) )
+            
 
 def Q4a():
     # Ecriture en utilisant des variables : A compléter
