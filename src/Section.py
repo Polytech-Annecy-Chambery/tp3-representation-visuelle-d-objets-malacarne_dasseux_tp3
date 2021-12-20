@@ -52,7 +52,7 @@ class Section:
 
     # Defines the vertices and faces 
     def generate(self):
-        self.vertices = [ # A revoir, il maque l'utilisation de self.position
+        self.vertices = [
                 self.parameters['position'], 
                 [self.parameters['position'][0], self.parameters['position'][1], self.parameters['position'][2]+self.parameters['height']], 
                 [self.parameters['position'][0]+self.parameters['width'], self.parameters['position'][1], self.parameters['position'][2]+self.parameters['height']],
@@ -62,9 +62,20 @@ class Section:
                 [self.parameters['position'][0], self.parameters['position'][1]+self.parameters['thickness'], self.parameters['position'][2]+self.parameters['height']], 
                 [self.parameters['position'][0]+self.parameters['width'], self.parameters['position'][1]+ self.parameters['thickness'], self.parameters['position'][2]+self.parameters['height']],
                 [self.parameters['position'][0]+self.parameters['width'], self.parameters['position'][1]+ self.parameters['thickness'], self.parameters['position'][2]]
-                
-                # Définir ici les sommets
                 ]
+        
+        self.vertices = [
+                [0,0,0], 
+                [0, 0, self.parameters['height']], 
+                [self.parameters['width'], 0, self.parameters['height']],
+                [self.parameters['width'], 0, 0],
+                
+                [0, self.parameters['thickness'], 0 ], 
+                [0, self.parameters['thickness'], self.parameters['height']], 
+                [self.parameters['width'],  self.parameters['thickness'], self.parameters['height']],
+                [self.parameters['width'],  self.parameters['thickness'], 0]
+                ]
+        
         self.faces = [
                 [0, 3, 2, 1], # La face en face de l'utilisateur
                 [1, 2, 6, 5], # la face en haut
@@ -89,13 +100,12 @@ class Section:
     def drawEdges(self):
         lines = []
         for x in self.faces : 
-            
             for i in range(len(x)):
                 lines.append([x[i], x[i+1 if i+1 < len(x) else 0]])
                 
         for l in lines : 
-            gl.glBegin(gl.GL_LINES) # Tracé d'une ligne
-            gl.glColor3fv([0,0,0]) # Couleur gris moyen
+            gl.glBegin(gl.GL_LINES)
+            gl.glColor3fv([0,0,0])
             for sommet in l : 
                 gl.glVertex3fv(self.vertices[sommet])
             gl.glEnd()
@@ -103,16 +113,23 @@ class Section:
                     
     # Draws the faces
     def draw(self):
-        # A compléter en remplaçant pass par votre code
-        gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_FILL) # on trace les faces : GL_FILL
+        gl.glPushMatrix()
+        gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_FILL)
+        gl.glTranslatef(
+            self.parameters['position'][0], 
+            self.parameters['position'][1], 
+            self.parameters['position'][2]
+        )
         for f in self.faces:
-            gl.glBegin(gl.GL_QUADS) # Tracé d’un quadrilatère
-            gl.glColor3fv(self.parameters['color']) # Couleur gris moyen
+            gl.glBegin(gl.GL_QUADS)
+            gl.glColor3fv(self.parameters['color'])
             for sommet in f : 
                 gl.glVertex3fv(self.vertices[sommet])
             gl.glEnd()
-            
-        self.drawEdges()
+        
+        if self.parameters['edges']:
+            self.drawEdges()
+        gl.glPopMatrix()
             
             
   

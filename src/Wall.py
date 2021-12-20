@@ -34,17 +34,20 @@ class Wall:
         if 'thickness' not in self.parameters:
             self.parameters['thickness'] = 0.2    
         if 'color' not in self.parameters:
-            self.parameters['color'] = [0.5, 0.5, 0.5]       
+            self.parameters['color'] = [0.5, 0.5, 0.5]
+        if 'edges' not in self.parameters:
+            self.parameters['edges'] = False     
             
         # Objects list
         self.objects = []
 
         # Adds a Section for this object
         self.parentSection = Section({'width': self.parameters['width'], \
-                                      'height': self.parameters['height'], \
-                                      'thickness': self.parameters['thickness'], \
-                                      'color': self.parameters['color'],
-                                      'position': self.parameters['position']})
+                                        'height': self.parameters['height'], \
+                                        'thickness': self.parameters['thickness'], \
+                                        'color': self.parameters['color'], \
+                                        'edges' : self.parameters['edges'], \
+                                        'position': self.parameters['position']})
         self.objects.append(self.parentSection) 
         
     # Getter
@@ -72,7 +75,7 @@ class Wall:
     def draw(self):
         gl.glPushMatrix()
         gl.glRotatef(self.parameters['orientation'], 0, 0, 1)
-        self.parentSection.drawEdges()
         for x in self.objects:
             x.draw()
         gl.glPopMatrix()
+        

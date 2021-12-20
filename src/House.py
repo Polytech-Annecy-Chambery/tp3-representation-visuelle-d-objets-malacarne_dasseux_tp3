@@ -5,7 +5,7 @@ Created on Thu Nov 16 19:47:50 2017
 @author: lfoul
 """
 import OpenGL.GL as gl
-
+from numpy import arctan, pi, cos, sin, sqrt, divide
 class House:
     # Constructor
     def __init__(self, parameters = {}) :  
@@ -41,5 +41,23 @@ class House:
             
     # Draws the house      
     def draw(self):  
-        # A compléter en remplaçant pass par votre code
-        pass        
+        gl.glPushMatrix()
+        gl.glRotatef(self.parameters['orientation'], 0, 0, 1)
+        gl.glTranslatef(self.parameters['position'][0], self.parameters['position'][1], self.parameters['position'][2])
+        ...
+        
+        for o in self.objects:
+            x=o.parameters['position'][0]
+            y=o.parameters['position'][1]
+
+            phi = arctan(divide(y,x))*180/pi if not(x==0) else 90
+            teta = o.parameters['orientation']+phi
+            
+            x_ = sqrt(pow(x,2)+ pow(y, 2)) * cos(teta*pi/180)
+            y_ = sqrt(pow(x,2)+ pow(y, 2)) * sin(teta*pi/180)
+
+            gl.glPushMatrix()
+            gl.glTranslatef(float(x-x_), float(y-y_),0)
+            o.draw()
+            gl.glPopMatrix()
+        gl.glPopMatrix()

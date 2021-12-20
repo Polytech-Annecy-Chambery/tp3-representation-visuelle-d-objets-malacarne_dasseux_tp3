@@ -5,6 +5,7 @@ Created on Thu Nov 16 19:47:50 2017
 @author: lfoul
 """
 
+from pygame.event import post
 from Configuration import Configuration
 from Section import Section
 from Wall import Wall
@@ -44,16 +45,23 @@ def Q2c():
 def Q3a():
     return Configuration().add(
             Wall({'position': [1, 1, 0], 'width':7, 'height':2.6, 'edges': True, 'orientation':90}) )
-            
+
+def Q3ba():
+    return Configuration().add(
+            Wall({'position': [1, 1, 0], 'width':7, 'height':2.6, 'edges': True, 'orientation':90}).\
+                add(Section({'position':[1,1.5,0], 'width': 5, 'height': 1, 'edges':True, 'color':[1,0,0]})) )
 
 def Q4a():
     # Ecriture en utilisant des variables : A compléter
-    wall1 = Wall(...)
-    wall2 = Wall(...)
-    wall3 = Wall(...)
-    wall4 = Wall(...)  
+    wall1 = Wall({'position': [0, 0, 0], 'width':7, 'height':2.6, 'edges': True, 'orientation':90, 'color':[1,0,0]})
+    wall2 = Wall({'position': [0, 0, 0], 'width':7, 'height':2.6, 'edges': True, 'color':[1,1,0]})
+    wall3 = Wall({'position': [0, 7, 0], 'width':7, 'height':2.6, 'edges': True, 'color':[0,1,0]})
+    wall4 = Wall({'position': [7, 0, 0], 'width':7, 'height':2.6, 'edges': True, 'orientation':90, 'color':[0,1,1]})  
     house = House({'position': [-3, 1, 0], 'orientation':0})
-    house.add(wall1).add(wall3).add(wall4).add(wall2)
+    house.add(wall1)\
+        .add(wall3)\
+        .add(wall4)\
+        .add(wall2)
     return Configuration().add(house)   
     
 def Q5a():  
@@ -103,17 +111,18 @@ def main():
     
     #
     #configuration = Q1a()
-    # configuration = Q1b_f()
-    # configuration = Q2b()
-    # configuration = Q2c()
-    configuration = Q3a()
-    # configuration = Q4a()
-    # configuration = Q5a()
-    # configuration = Q5b()
-    # configuration = Q5c1()
-    # configuration = Q5c2() 
-    # configuration = Q5d()
-    # configuration = Q6()
+    #configuration = Q1b_f()
+    #configuration = Q2b()
+    #configuration = Q2c()
+    #configuration = Q3a()
+    #configuration = Q3ba()
+    configuration = Q4a()
+    #configuration = Q5a()
+    #configuration = Q5b()
+    #configuration = Q5c1()
+    #configuration = Q5c2() 
+    #configuration = Q5d()
+    #configuration = Q6()
     configuration.display()     
          
 # Calls the main function

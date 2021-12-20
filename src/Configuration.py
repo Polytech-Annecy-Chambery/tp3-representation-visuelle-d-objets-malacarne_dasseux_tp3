@@ -93,8 +93,8 @@ class Configuration:
         self.vertices = [ 
                 [0, 0, 0 ],
                 [1, 0, 0 ],
-                [0, 1, 0],
-                [0, 0, 1]
+                [0, 1, 0 ],
+                [0, 0, 1 ]
                 ] 
         self.edges = [
                 [0, 1],
