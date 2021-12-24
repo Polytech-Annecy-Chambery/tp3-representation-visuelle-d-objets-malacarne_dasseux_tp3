@@ -46,14 +46,52 @@ class Opening:
 
     # Defines the vertices and faces        
     def generate(self):
-        self.vertices = [ 
-                # Définir ici les sommets
+        self.vertices = [
+                [0,0,0], 
+                [0, 0, self.parameters['height']], 
+                [self.parameters['width'], 0, self.parameters['height']],
+                [self.parameters['width'], 0, 0],
+                
+                [0, self.parameters['thickness'], 0 ], 
+                [0, self.parameters['thickness'], self.parameters['height']], 
+                [self.parameters['width'],  self.parameters['thickness'], self.parameters['height']],
+                [self.parameters['width'],  self.parameters['thickness'], 0]
                 ]
         self.faces = [
-                # définir ici les faces
+                [0, 1, 5, 4],
+                [0, 3, 7, 4],
+                [1, 2, 6, 5],
+                [3, 2, 6, 7]
                 ]   
-        
+
+    # Draws the edges
+    def drawEdges(self):
+        lines = []
+        for x in self.faces : 
+            for i in range(len(x)):
+                lines.append([x[i], x[i+1 if i+1 < len(x) else 0]])
+                
+        for l in lines : 
+            gl.glBegin(gl.GL_LINES)
+            gl.glColor3fv([0,0,0])
+            for sommet in l : 
+                gl.glVertex3fv(self.vertices[sommet])
+            gl.glEnd() 
+
     # Draws the faces                
     def draw(self):        
-        # A compléter en remplaçant pass par votre code
-        pass
+        gl.glPushMatrix()
+        gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_FILL)
+        gl.glTranslatef(
+            self.parameters['position'][0], 
+            self.parameters['position'][1], 
+            self.parameters['position'][2]
+        )
+        for f in self.faces:
+            gl.glBegin(gl.GL_QUADS)
+            gl.glColor3fv(self.parameters['color'])
+            for sommet in f : 
+                gl.glVertex3fv(self.vertices[sommet])
+            gl.glEnd()
+        self.drawEdges()
+        gl.glPopMatrix()

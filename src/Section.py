@@ -53,18 +53,6 @@ class Section:
     # Defines the vertices and faces 
     def generate(self):
         self.vertices = [
-                self.parameters['position'], 
-                [self.parameters['position'][0], self.parameters['position'][1], self.parameters['position'][2]+self.parameters['height']], 
-                [self.parameters['position'][0]+self.parameters['width'], self.parameters['position'][1], self.parameters['position'][2]+self.parameters['height']],
-                [self.parameters['position'][0]+self.parameters['width'], self.parameters['position'][1], self.parameters['position'][2]],
-                
-                [self.parameters['position'][0], self.parameters['position'][1]+self.parameters['thickness'], self.parameters['position'][2] ], 
-                [self.parameters['position'][0], self.parameters['position'][1]+self.parameters['thickness'], self.parameters['position'][2]+self.parameters['height']], 
-                [self.parameters['position'][0]+self.parameters['width'], self.parameters['position'][1]+ self.parameters['thickness'], self.parameters['position'][2]+self.parameters['height']],
-                [self.parameters['position'][0]+self.parameters['width'], self.parameters['position'][1]+ self.parameters['thickness'], self.parameters['position'][2]]
-                ]
-        
-        self.vertices = [
                 [0,0,0], 
                 [0, 0, self.parameters['height']], 
                 [self.parameters['width'], 0, self.parameters['height']],
