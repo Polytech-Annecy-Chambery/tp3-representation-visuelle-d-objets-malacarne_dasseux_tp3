@@ -85,7 +85,7 @@ def Q5b():
 def Q5c1():      
     section = Section({'width':7, 'height':2.6})
     opening1 = Opening({'position': [2, 0, 0], 'width':0.9, 'height':2.15, 'thickness':0.2, 'color': [0.7, 0.7, 0.7]})
-    sections = section.createOpening(opening1)
+    sections = section.createNewSections(opening1)
     configuration = Configuration()
     for x in sections:
         configuration.add(x)    
@@ -97,7 +97,7 @@ def Q5c2():
     sections = section.createNewSections(opening2)
     configuration = Configuration()
     for section in sections:
-        configuration.add(section)    
+        configuration.add(section)
     return configuration    
 
 def Q5d():      
@@ -118,9 +118,9 @@ def main():
     #configuration = Q3ba()
     #configuration = Q4a()
     #configuration = Q5a()
-    configuration = Q5b()
+    #configuration = Q5b()
     #configuration = Q5c1()
-    #configuration = Q5c2() 
+    configuration = Q5c2() 
     #configuration = Q5d()
     #configuration = Q6()
     configuration.display()     

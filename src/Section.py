@@ -5,6 +5,7 @@ Created on Thu Nov 16 19:47:50 2017
 @author: lfoul
 """
 import OpenGL.GL as gl
+from OpenGL.arrays.arraydatatype import HandlerRegistry
 
 from Opening import Opening
 
@@ -78,17 +79,90 @@ class Section:
 
     # Checks if the opening can be created for the object x
     def canCreateOpening(self, x : Opening) -> bool:
-        if x.getParameter("position")[0] + x.getParameter("width") > self.getParameter("width"):
+        if x.getParameter("position")[0] + x.getParameter("width") > self.parameters["width"]:
             return False
-        if x.getParameter("position")[2] + x.getParameter("height") > self.getParameter("height"):
+        if x.getParameter("position")[2] + x.getParameter("height") > self.parameters["height"]:
             return False 
         return True
 
 
     # Creates the new sections for the object x
-    def createNewSections(self, x : Opening):
-        # A compléter en remplaçant pass par votre code
-        pass              
+    def createNewSections(self, x : Opening) -> list:
+        if self.canCreateOpening(x):
+            sections=[]
+            section1 = Section(
+                {
+                    "position":     self.parameters["position"], 
+                    "width":        x.getParameter("position")[0]-self.parameters["position"][0], 
+                    "height":       self.parameters["height"],
+                    "thickness":    self.parameters["thickness"],
+                    "color" :       self.parameters["color"],
+                    "edges":        self.parameters['edges'],
+                    "orientation":  self.parameters["orientation"]
+                })
+            if section1.parameters["width"] > 0 : 
+                sections.append(section1)
+
+            
+            section2 = Section(
+                {
+                    "position":[
+                        self.parameters["position"][0] +    x.getParameter("position")[0], 
+                        self.parameters["position"][1] +    0, 
+                        self.parameters["position"][2] +    x.getParameter("position")[2]+x.getParameter("height")
+                    ],
+                    "width":        x.getParameter("width"), 
+                    "height":       self.parameters["height"]-x.getParameter("height")-(x.getParameter("position")[2]-self.parameters["position"][2]),
+                    "thickness":    self.parameters["thickness"],
+                    "color" :       self.parameters["color"],
+                    "edges":        self.parameters['edges'],
+                    "orientation":  self.parameters["orientation"]
+                })
+            if section2.parameters["height"] > 0 : 
+                sections.append(section2)
+            
+
+            section3 = Section(
+                {
+                    "position":[
+                        self.parameters["position"][0] +    x.getParameter("position")[0], 
+                        self.parameters["position"][1] +    0, 
+                        self.parameters["position"][2] +    0
+                    ],
+                    "width":        x.getParameter("width"),
+                    "height":       self.parameters["height"]-x.getParameter("height")-section2.parameters["height"],
+                    "thickness":    self.parameters["thickness"],
+                    "color" :       self.parameters["color"],
+                    "edges":        self.parameters['edges'],
+                    "orientation":  self.parameters["orientation"]
+                }
+            )
+            if section3.parameters["height"] > 0 : 
+                sections.append(section3)
+
+
+            section4 = Section(
+                {
+                    "position":[
+                        self.parameters["position"][0] +    section1.parameters["width"]+x.getParameter("width"),
+                        self.parameters["position"][1] +    0,
+                        self.parameters["position"][2] +    0
+                    ],
+                    "width":        self.parameters["width"]-section1.parameters["width"]-x.getParameter("width"),
+                    "height":       self.parameters["height"],
+                    "thickness":    self.parameters["thickness"],
+                    "color" :       self.parameters["color"],
+                    "edges":        self.parameters['edges'],
+                    "orientation":  self.parameters["orientation"]
+                }
+            )
+            if section4.parameters["width"] > 0 : 
+                sections.append(section4)
+
+            return sections
+        else:
+            return []
+      
         
     # Draws the edges
     def drawEdges(self):
@@ -114,6 +188,8 @@ class Section:
             self.parameters['position'][1], 
             self.parameters['position'][2]
         )
+        gl.glPushMatrix()
+        gl.glRotatef(self.parameters["orientation"], 0, 0, 1)
         for f in self.faces:
             gl.glBegin(gl.GL_QUADS)
             gl.glColor3fv(self.parameters['color'])
@@ -123,6 +199,7 @@ class Section:
         
         if self.parameters['edges']:
             self.drawEdges()
+        gl.glPopMatrix()
         gl.glPopMatrix()
             
             
