@@ -4,7 +4,9 @@ Created on Thu Nov 16 19:47:50 2017
 
 @author: lfoul
 """
+from copy import copy, deepcopy
 import OpenGL.GL as gl
+from Opening import Opening
 from Section import Section
 
 import math
@@ -67,8 +69,23 @@ class Wall:
         return None
     
     # Adds an object    
-    def add(self, x):    
+    def add(self, x):
+        section = self.findSection(x)
+
+        positionRelative2Section = [
+            x.parameters["position"][0] - (section[1].getParameter("position")[0]),
+            x.parameters["position"][1] - (section[1].getParameter("position")[1]),
+            x.parameters["position"][2] - (section[1].getParameter("position")[2]),
+        ]
+
+        relativeOpening = deepcopy(x)
+        relativeOpening.setParameter("position", positionRelative2Section)
+        newSections = section[1].createNewSections(relativeOpening)
+
+        self.objects.pop(section[0])
         self.objects.append(x)
+        for i in newSections:
+            self.objects.append(i)
         return self
                     
     # Draws the faces

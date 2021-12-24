@@ -49,7 +49,7 @@ class Section:
         return self.parameters[parameterKey]
     
     # Setter
-    def setParameter(self, parameterKey, parameterValue):
+    def setParameter(self, parameterKey : str, parameterValue):
         self.parameters[parameterKey] = parameterValue
         return self     
 
@@ -78,90 +78,90 @@ class Section:
                 ]   
 
     # Checks if the opening can be created for the object x
-    def canCreateOpening(self, x : Opening) -> bool:
-        if x.getParameter("position")[0] + x.getParameter("width") > self.parameters["width"]:
+    def canCreateOpening(self, x) -> bool:
+        if x.getParameter("position")[0] + x.getParameter("width") > self.parameters["position"][0] + self.parameters["width"]:
             return False
-        if x.getParameter("position")[2] + x.getParameter("height") > self.parameters["height"]:
-            return False 
+
+        if x.getParameter("position")[0]< self.parameters["position"][0] :
+            return False
+
+        if x.getParameter("position")[2] + x.getParameter("height") > self.parameters["position"][2] + self.parameters["height"]:
+            return False
+        
+        if x.getParameter("position")[2] < self.parameters["position"][2]:
+            return False  
         return True
 
 
     # Creates the new sections for the object x
     def createNewSections(self, x : Opening) -> list:
-        if self.canCreateOpening(x):
-            sections=[]
-            section1 = Section(
-                {
-                    "position":     self.parameters["position"], 
-                    "width":        x.getParameter("position")[0]-self.parameters["position"][0], 
-                    "height":       self.parameters["height"],
-                    "thickness":    self.parameters["thickness"],
-                    "color" :       self.parameters["color"],
-                    "edges":        self.parameters['edges'],
-                    "orientation":  self.parameters["orientation"]
-                })
-            if section1.parameters["width"] > 0 : 
-                sections.append(section1)
+        sections=[]
+        section1 = Section(
+            {
+                "position":     self.parameters["position"], 
+                "width":        x.getParameter("position")[0], 
+                "height":       self.parameters["height"],
+                "thickness":    self.parameters["thickness"],
+                "color" :       self.parameters["color"],
+                "edges":        self.parameters['edges'],
+                "orientation":  self.parameters["orientation"]
+            })
+        if section1.parameters["width"] > 0 : 
+            sections.append(section1)
 
-            
-            section2 = Section(
-                {
-                    "position":[
-                        self.parameters["position"][0] +    x.getParameter("position")[0], 
-                        self.parameters["position"][1] +    0, 
-                        self.parameters["position"][2] +    x.getParameter("position")[2]+x.getParameter("height")
-                    ],
-                    "width":        x.getParameter("width"), 
-                    "height":       self.parameters["height"]-x.getParameter("height")-(x.getParameter("position")[2]-self.parameters["position"][2]),
-                    "thickness":    self.parameters["thickness"],
-                    "color" :       self.parameters["color"],
-                    "edges":        self.parameters['edges'],
-                    "orientation":  self.parameters["orientation"]
-                })
-            if section2.parameters["height"] > 0 : 
-                sections.append(section2)
-            
+        section2 = Section(
+            {
+                "position":[
+                    self.parameters["position"][0] +    section1.parameters["width"], 
+                    self.parameters["position"][1] +    0, 
+                    self.parameters["position"][2] +    x.getParameter("position")[2]+x.getParameter("height")
+                ],
+                "width":        x.getParameter("width"), 
+                "height":       self.parameters["height"]-x.getParameter("height")-(x.getParameter("position")[2]-self.parameters["position"][2]),
+                "thickness":    self.parameters["thickness"],
+                "color" :       self.parameters["color"],
+                "edges":        self.parameters['edges'],
+                "orientation":  self.parameters["orientation"]
+            })
+        if section2.parameters["height"] > 0 : 
+            sections.append(section2)
 
-            section3 = Section(
-                {
-                    "position":[
-                        self.parameters["position"][0] +    x.getParameter("position")[0], 
-                        self.parameters["position"][1] +    0, 
-                        self.parameters["position"][2] +    0
-                    ],
-                    "width":        x.getParameter("width"),
-                    "height":       self.parameters["height"]-x.getParameter("height")-section2.parameters["height"],
-                    "thickness":    self.parameters["thickness"],
-                    "color" :       self.parameters["color"],
-                    "edges":        self.parameters['edges'],
-                    "orientation":  self.parameters["orientation"]
-                }
-            )
-            if section3.parameters["height"] > 0 : 
-                sections.append(section3)
+        section3 = Section(
+            {
+                "position":[
+                    self.parameters["position"][0] +    section1.parameters["width"], 
+                    self.parameters["position"][1] +    0, 
+                    self.parameters["position"][2] +    0
+                ],
+                "width":        x.getParameter("width"),
+                "height":       self.parameters["height"]-x.getParameter("height")-section2.parameters["height"],
+                "thickness":    self.parameters["thickness"],
+                "color" :       self.parameters["color"],
+                "edges":        self.parameters['edges'],
+                "orientation":  self.parameters["orientation"]
+            }
+        )
+        if section3.parameters["height"] > 0 : 
+            sections.append(section3)
 
-
-            section4 = Section(
-                {
-                    "position":[
-                        self.parameters["position"][0] +    section1.parameters["width"]+x.getParameter("width"),
-                        self.parameters["position"][1] +    0,
-                        self.parameters["position"][2] +    0
-                    ],
-                    "width":        self.parameters["width"]-section1.parameters["width"]-x.getParameter("width"),
-                    "height":       self.parameters["height"],
-                    "thickness":    self.parameters["thickness"],
-                    "color" :       self.parameters["color"],
-                    "edges":        self.parameters['edges'],
-                    "orientation":  self.parameters["orientation"]
-                }
-            )
-            if section4.parameters["width"] > 0 : 
-                sections.append(section4)
-
-            return sections
-        else:
-            return []
+        section4 = Section(
+            {
+                "position":[
+                    self.parameters["position"][0] +    section1.parameters["width"]+x.getParameter("width"),
+                    self.parameters["position"][1] +    0,
+                    self.parameters["position"][2] +    0
+                ],
+                "width":        self.parameters["width"]-section1.parameters["width"]-x.getParameter("width"),
+                "height":       self.parameters["height"],
+                "thickness":    self.parameters["thickness"],
+                "color" :       self.parameters["color"],
+                "edges":        self.parameters['edges'],
+                "orientation":  self.parameters["orientation"]
+            }
+        )
+        if section4.parameters["width"] > 0 : 
+            sections.append(section4)
+        return sections
       
         
     # Draws the edges
