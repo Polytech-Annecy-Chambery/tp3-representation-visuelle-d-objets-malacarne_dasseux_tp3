@@ -6,6 +6,8 @@ Created on Thu Nov 16 19:47:50 2017
 """
 import OpenGL.GL as gl
 
+from Opening import Opening
+
 class Section:
     # Constructor
     def __init__(self, parameters = {}) :  
@@ -75,12 +77,16 @@ class Section:
                 ]   
 
     # Checks if the opening can be created for the object x
-    def canCreateOpening(self, x):
-        # A compléter en remplaçant pass par votre code
-        pass      
-        
+    def canCreateOpening(self, x : Opening) -> bool:
+        if x.getParameter("position")[0] + x.getParameter("width") > self.getParameter("width"):
+            return False
+        if x.getParameter("position")[2] + x.getParameter("height") > self.getParameter("height"):
+            return False 
+        return True
+
+
     # Creates the new sections for the object x
-    def createNewSections(self, x):
+    def createNewSections(self, x : Opening):
         # A compléter en remplaçant pass par votre code
         pass              
         
