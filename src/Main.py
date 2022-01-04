@@ -137,10 +137,10 @@ def Q6():
  
 def Q7():
     wall1 = Wall({"position":[0,0,0], 'width':7, 'height':2.6, "edges":True})
-    
+
     door = Door({'position': [2, 0.1, 0]})
     window = Window({'position': [4, 0.1, 1.25]}) 
-    
+
     wall1.add(door)
     wall1.add(window)
 

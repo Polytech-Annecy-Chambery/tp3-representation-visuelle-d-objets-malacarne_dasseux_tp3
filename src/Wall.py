@@ -5,9 +5,11 @@ Created on Thu Nov 16 19:47:50 2017
 @author: lfoul
 """
 from copy import copy, deepcopy
+from Door import Door
 import OpenGL.GL as gl
 from Opening import Opening
 from Section import Section
+from Window import Window
 
 class Wall:
     # Constructor
@@ -81,6 +83,10 @@ class Wall:
         newSections = section[1].createNewSections(relativeOpening)
 
         self.objects.pop(section[0])
+
+        if not(isinstance(x, Opening)):
+            o = Opening({"position" : [x.getParameter("position")[0], section[1].getParameter("position")[1], x.getParameter("position")[2]], "height": x.getParameter("height"), "width": x.getParameter("width"), "thickness" : self.getParameter("thickness"), "color": self.parameters["color"]})
+            self.objects.append(o)
         self.objects.append(x)
         for i in newSections:
             self.objects.append(i)

@@ -79,7 +79,7 @@ class Opening:
             gl.glEnd() 
 
     # Draws the faces                
-    def draw(self):        
+    def draw(self):  
         gl.glPushMatrix()
         gl.glPolygonMode(gl.GL_FRONT_AND_BACK, gl.GL_FILL)
         gl.glTranslatef(

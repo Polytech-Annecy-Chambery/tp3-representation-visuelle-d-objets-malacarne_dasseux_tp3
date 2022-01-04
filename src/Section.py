@@ -103,7 +103,7 @@ class Section:
                 "height":       self.parameters["height"],
                 "thickness":    self.parameters["thickness"],
                 "color" :       self.parameters["color"],
-                "edges":        self.parameters['edges'],
+                #"edges":        self.parameters['edges'],
                 "orientation":  self.parameters["orientation"]
             })
         if section1.parameters["width"] > 0 : 
@@ -120,7 +120,7 @@ class Section:
                 "height":       self.parameters["height"]-x.getParameter("height")-(x.getParameter("position")[2]-self.parameters["position"][2]),
                 "thickness":    self.parameters["thickness"],
                 "color" :       self.parameters["color"],
-                "edges":        self.parameters['edges'],
+                #"edges":        self.parameters['edges'],
                 "orientation":  self.parameters["orientation"]
             })
         if section2.parameters["height"] > 0 : 
@@ -137,7 +137,7 @@ class Section:
                 "height":       self.parameters["height"]-x.getParameter("height")-section2.parameters["height"],
                 "thickness":    self.parameters["thickness"],
                 "color" :       self.parameters["color"],
-                "edges":        self.parameters['edges'],
+                #"edges":        self.parameters['edges'],
                 "orientation":  self.parameters["orientation"]
             }
         )
@@ -155,7 +155,7 @@ class Section:
                 "height":       self.parameters["height"],
                 "thickness":    self.parameters["thickness"],
                 "color" :       self.parameters["color"],
-                "edges":        self.parameters['edges'],
+                #"edges":        self.parameters['edges'],
                 "orientation":  self.parameters["orientation"]
             }
         )
