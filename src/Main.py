@@ -135,6 +135,34 @@ def Q6():
         .add(roof)
     return Configuration().add(house)  
  
+def Q7():
+    wall1 = Wall({"position":[0,0,0], 'width':7, 'height':2.6, "edges":True})
+    
+    door = Door({'position': [2, 0.1, 0]})
+    window = Window({'position': [4, 0.1, 1.25]}) 
+    
+    wall1.add(door)
+    wall1.add(window)
+
+    wall2 = Wall({'position': [0, 0, 0], 'width':7, 'height':2.6, 'edges': True, 'orientation':90})
+    wall3 = Wall({'position': [0, 7, 0], 'width':7, 'height':2.6, 'edges': True})
+    wall4 = Wall({'position': [7, 0, 0], 'width':7, 'height':2.6, 'edges': True, 'orientation':90})  
+    roof = Wall({'position':[0, 0, 2.5], 'width':7, 'height':0.1, 'edges': True, "thickness":7})
+    house = House({'position': [-7, 1, 0], 'orientation':0})
+    house.add(wall1)\
+        .add(wall3)\
+        .add(wall4)\
+        .add(wall2)\
+        .add(roof)
+    
+    house2 = House({'position': [0, 1, 0], 'orientation':0})
+    house2.add(wall1)\
+        .add(wall3)\
+        .add(wall4)\
+        .add(wall2)\
+        .add(roof)
+
+    return Configuration().add(house).add(house2)  
 def main():
     # Enlever un des commentaires pour la question traitée
     
@@ -151,7 +179,8 @@ def main():
     #configuration = Q5c1()
     #configuration = Q5c2() 
     #configuration = Q5d()
-    configuration = Q6()
+    #configuration = Q6()
+    configuration = Q7()
     configuration.display()     
          
 # Calls the main function

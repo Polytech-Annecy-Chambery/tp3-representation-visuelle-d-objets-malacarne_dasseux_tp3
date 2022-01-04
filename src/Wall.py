@@ -9,8 +9,6 @@ import OpenGL.GL as gl
 from Opening import Opening
 from Section import Section
 
-import math
-
 class Wall:
     # Constructor
     def __init__(self, parameters = {}) :  
